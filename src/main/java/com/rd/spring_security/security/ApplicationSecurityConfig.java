@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import static com.rd.spring_security.security.UserRole.STUDENT;
+
 /**
  * Created at 26.05.2022.
  *
@@ -34,6 +36,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*")
                 .permitAll()
+                .antMatchers("/api/**").hasRole(STUDENT.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -44,11 +47,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected UserDetailsService userDetailsService() {
         UserDetails tanerKayaUser = User.builder()
-                .username("tanerkaya")
+                .username("taner")
                 .password(passwordEncoder.encode("password"))
                 .roles("STUDENT")
                 .build();
 
-        return new InMemoryUserDetailsManager(tanerKayaUser);
+        UserDetails lindaUser = User.builder()
+                .username("linda")
+                .password(passwordEncoder.encode("password123"))
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(tanerKayaUser, lindaUser);
     }
 }

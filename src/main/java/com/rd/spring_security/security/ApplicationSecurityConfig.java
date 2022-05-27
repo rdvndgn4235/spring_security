@@ -3,8 +3,6 @@ package com.rd.spring_security.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,7 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import static com.rd.spring_security.security.UserRole.*;
+import java.util.concurrent.TimeUnit;
+
+import static com.rd.spring_security.security.UserRole.STUDENT;
 
 /**
  * Created at 26.05.2022.
@@ -49,7 +49,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .httpBasic();
                 .formLogin()
                 .loginPage("/login")
-                .permitAll().defaultSuccessUrl("/courses", true);
+                .permitAll().defaultSuccessUrl("/courses", true)
+                .and()
+                .rememberMe()
+                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30))
+                .key("verystongsecurity"); // default 2 week
     }
 
     @Override

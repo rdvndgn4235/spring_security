@@ -49,20 +49,24 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 //                .httpBasic();
                 .formLogin()
-                .loginPage("/login")
-                .permitAll().defaultSuccessUrl("/courses", true)
+                    .loginPage("/login")
+                    .permitAll()
+                    .defaultSuccessUrl("/courses", true)
+                    .passwordParameter("password")
+                    .usernameParameter("username")
                 .and()
                 .rememberMe()// default 2 week
-                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30))
-                .key("verystongsecurity")
+                    .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30))
+                    .key("verystongsecurity")
+                    .rememberMeParameter("remember-me")
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-                .logoutUrl("/logout")
-                .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID", "remember-me")
-                .logoutSuccessUrl("/login");
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .logoutUrl("/logout")
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID", "remember-me")
+                    .logoutSuccessUrl("/login");
     }
 
     @Override

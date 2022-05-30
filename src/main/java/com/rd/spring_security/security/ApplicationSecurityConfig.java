@@ -15,6 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.rd.spring_security.security.UserRole.ADMIN;
 import static com.rd.spring_security.security.UserRole.STUDENT;
 
 /**
@@ -45,7 +46,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*")
                 .permitAll()
-                .antMatchers("/api/**").hasRole(STUDENT.name())
+                .antMatchers("/api/**").hasAnyAuthority("ROLE_" + STUDENT.name())
                 .anyRequest()
                 .authenticated()
                 .and()

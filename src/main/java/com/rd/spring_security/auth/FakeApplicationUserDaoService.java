@@ -47,7 +47,7 @@ public class FakeApplicationUserDaoService implements ApplicationUserDao {
                 ),
                 new ApplicationUser(
                         "tom",
-                        passwordEncoder.encode("password123"),
+                        passwordEncoder.encode("password"),
                         Collections.singletonList(new SimpleGrantedAuthority(UserRole.ADMIN_TRAINEE.name())),
                         true,
                         true,
@@ -56,7 +56,7 @@ public class FakeApplicationUserDaoService implements ApplicationUserDao {
                 ),
                 new ApplicationUser(
                         "linda",
-                        passwordEncoder.encode("password123"),
+                        passwordEncoder.encode("password"),
                         Collections.singletonList(new SimpleGrantedAuthority(UserRole.ADMIN.name())),
                         true,
                         true,

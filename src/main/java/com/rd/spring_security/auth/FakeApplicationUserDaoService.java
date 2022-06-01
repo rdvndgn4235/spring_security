@@ -1,16 +1,14 @@
 package com.rd.spring_security.auth;
 
-import com.rd.spring_security.security.UserRole;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static com.rd.spring_security.security.ApplicationUserRole.*;
 
 /**
  * Created at 30.05.2022.
@@ -30,25 +28,16 @@ public class FakeApplicationUserDaoService implements ApplicationUserDao {
     @Override
     public Optional<ApplicationUser> selectApplicationUserByUsername(String username) {
         return getApplicationUsers().stream()
-                .filter(applicationUser -> applicationUser.getUsername().equals(username))
+                .filter(applicationUser -> username.equals(applicationUser.getUsername()))
                 .findFirst();
     }
 
     private List<ApplicationUser> getApplicationUsers() {
-        List<ApplicationUser> applicationUsers = Arrays.asList(
+        List<ApplicationUser> applicationUsers = Lists.newArrayList(
                 new ApplicationUser(
                         "anna",
                         passwordEncoder.encode("password"),
-                        Collections.singletonList(new SimpleGrantedAuthority(UserRole.STUDENT.name())),
-                        true,
-                        true,
-                        true,
-                        true
-                ),
-                new ApplicationUser(
-                        "tom",
-                        passwordEncoder.encode("password"),
-                        Collections.singletonList(new SimpleGrantedAuthority(UserRole.ADMIN_TRAINEE.name())),
+                        STUDENT.getGrantedAuthorities(),
                         true,
                         true,
                         true,
@@ -57,13 +46,23 @@ public class FakeApplicationUserDaoService implements ApplicationUserDao {
                 new ApplicationUser(
                         "linda",
                         passwordEncoder.encode("password"),
-                        Collections.singletonList(new SimpleGrantedAuthority(UserRole.ADMIN.name())),
+                        ADMIN.getGrantedAuthorities(),
+                        true,
+                        true,
+                        true,
+                        true
+                ),
+                new ApplicationUser(
+                        "tom",
+                        passwordEncoder.encode("password"),
+                        ADMIN_TRAINEE.getGrantedAuthorities(),
                         true,
                         true,
                         true,
                         true
                 )
         );
+
         return applicationUsers;
     }
 }

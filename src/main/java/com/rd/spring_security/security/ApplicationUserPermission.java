@@ -5,7 +5,7 @@ package com.rd.spring_security.security;
  *
  * @author Ridvan Dogan
  */
-public enum UserPermission {
+public enum ApplicationUserPermission {
     STUDENT_READ("student:read"),
     STUDENT_WRITE("student:write"),
     COURSE_READ("course:read"),
@@ -13,7 +13,7 @@ public enum UserPermission {
 
     private final String permission;
 
-    UserPermission(String permission) {
+    ApplicationUserPermission(String permission) {
         this.permission = permission;
     }
 

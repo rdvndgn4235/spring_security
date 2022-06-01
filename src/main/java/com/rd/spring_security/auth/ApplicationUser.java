@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created at 30.05.2022.
@@ -11,7 +12,7 @@ import java.util.Collection;
  * @author Ridvan Dogan
  */
 public class ApplicationUser implements UserDetails {
-    private final Collection<? extends GrantedAuthority> grantedAuthorities;
+    private final Set<? extends GrantedAuthority> grantedAuthorities;
     private final String password;
     private final String username;
     private final boolean isEnabled;
@@ -22,7 +23,7 @@ public class ApplicationUser implements UserDetails {
     public ApplicationUser(
                             String username,
                             String password,
-                            Collection<? extends GrantedAuthority> grantedAuthorities,
+                            Set<? extends GrantedAuthority>  grantedAuthorities,
                             boolean isEnabled,
                             boolean isAccountNonExpired,
                             boolean isAccountNonLocked,
